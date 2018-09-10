@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<style>
+		
+	</style>
+</head>
+<body>
+	
+</body>
+<script>
+	
+	//代理
+
+	// function SuperStar(){
+	// 	this.拍电影 = function(){
+
+	// 	}
+	// 	this.唱歌 = function(){
+
+	// 	}
+	// 	this.真人秀 = function(){
+
+	// 	}
+	// }
+
+	// function Proxy(){
+	// 	var 王宝强 = new SuperStar();
+	// 	this.拍电影 = function(){
+	// 		//搞价
+	// 		//确定拍摄时间
+	// 		王宝强.拍电影();
+	// 	}
+	// }
+	
+	// var 宋喆 = new Proxy();
+
+	// 宋喆.拍电影();
+	
+	// function $$(options){
+	// 	this.animate = function(args){
+	// 		//判断args参数是否合法
+
+	// 		$(options).animate(args);
+
+	// 		//做一些收尾的工作
+	// 	}
+		
+	// }
+	
+
+	// $$("#box").animate();
+
+	var obj = {
+		val : 100,
+		f1(){
+			console.log("f1");
+		},
+		f2(){
+			console.log("f2");
+		},
+		talk(){
+			console.log("obj....talk");
+		}
+	}
+
+	function Proxy(target, options){
+		var temp = {};
+		for(let attr in target) {
+			if(typeof target[attr] == "function"){
+				temp[attr] = function(){
+					options[attr] ? options[attr]() : "";
+					target[attr]();
+				}
+			} else {
+				Object.defineProperty(temp, attr, {
+					get() {
+						return target[attr];
+					},
+					set(val) {
+						target[attr] = val;
+					}
+				})
+			}
+		}
+		return temp;
+	}
+
+	var proxy = Proxy(obj, {
+		talk : function(){
+			console.log("这是talk代理方法");
+		}
+	});
+	
+</script>
+
+</html>
