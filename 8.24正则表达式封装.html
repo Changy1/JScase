@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<script>
+	//封装一个选择器的方法
+	function $(selector){
+		var reg2 = /^#.+/;
+		var reg3 = /^\.[^\[]+$/;  //这里要加结尾，如果不加结尾那么 .div[xxx]中括号前面也符合这个条件，意思是以.开头后面有一个或者多个非[
+		var reg4 = /^[a-z]+\d?$/;
+		var reg5 =/^\..+\[.+='.+'\]/;
+		var reg6 = /^.+\[.+='.+'\]/;
+		if(reg2.test(selector)){
+			return document.getElementById(selector.substring(1,selector.length));
+		}
+		if(reg3.test(selector)){
+			console.log(2);
+			return document.getElementsByClassName(selector.substring(1,selector.length));
+		}
+		if(reg4.test(selector)){
+				return document.getElementsByTagName(selector);
+		}
+		if(reg5.test(selector)){
+			console.log(1);
+			var newarray = [];
+			var str1 = selector.replace(/^\.(.+)\[(.+)='(.+)'\]/,function(a,b,c,d){
+				return b;
+			})
+			var str2 = selector.replace(/^\.(.+)\[(.+)='(.+)'\]/,function(a,b,c,d){
+				return c;
+			})
+			var str3 = selector.replace(/^\.(.+)\[(.+)='(.+)'\]/,function(a,b,c,d){
+				return d;
+			})
+			var list = document.getElementsByClassName(str1);
+			for(var i=0;i<list.length;i++){
+				if(list[i].getAttribute(str2)==str3){
+					newarray.push(list[i]);
+				}
+			}
+			return newarray;
+		}
+		if(reg6.test(selector)){
+			var newarray = [];
+			var str1 = selector.replace(/^(.+)\[(.+)='(.+)'\]/,function(a,b,c,d){
+				return b;
+			})
+			var str2 = selector.replace(/^(.+)\[(.+)='(.+)'\]/,function(a,b,c,d){
+				return c;
+			})
+			var str3 = selector.replace(/^(.+)\[(.+)='(.+)'\]/,function(a,b,c,d){
+				return d;
+			})
+			var list = document.getElementsByTagName(str1);
+			for(var i=0;i<list.length;i++){
+				if(list[i].getAttribute(str2)==str3){
+					newarray.push(list[i]);
+				}
+			}
+			return newarray;
+		}
+	}
+// 	
+// 	var box = $("#box");
+// 	var boxs = $(".ps");
+// 	var boxs = $("div");
+// 	$("div[id=23]")
+// 	$(".prr[name='abc']")
+	
+</script>
+
+<body>
+	<div id='22'></div>
+	<div class='div' id='22'></div>
+	<input class='input' value='abc'>
+	<input class='div' value='ss'>
+	<input class='22'>
+	<span id='ss' class='22' value='sss'>
+</body>
+
+</html>
