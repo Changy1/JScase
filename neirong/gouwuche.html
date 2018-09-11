@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>兄弟！买点！</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+        input{
+            cursor: pointer;
+        }
+        .container{
+            width: 990px;
+            margin: 0 auto;
+        }
+        .top{
+            line-height: 40px;
+            height: 40px;
+            border: 1px solid rgb(233,233,233);
+        }
+        .hr{
+            height: 6px;
+            margin: 0 6px 1px 6px;
+            border-bottom: 1px solid rgb(176,176,176);
+        }
+        .body{
+            margin-bottom: 20px;
+            height: 320px;
+            border: solid 1px rgb(233,233,233);
+        }
+        .body-top{
+            list-style: none;
+            margin-bottom: 36px;
+            height: 140px;
+            border-top: solid 1px rgb(233,233,233);
+            border-bottom: solid 1px rgb(233,233,233);
+        }
+        .body-top li{
+            margin: 20px 0;
+            float: left;
+        }
+        .body-bottom li{
+            margin: 20px 0;
+            float: left;
+        }
+        .body-bottom{
+            list-style: none;
+            height: 140px;
+            border-top: solid 1px rgb(233,233,233);
+            border-bottom: solid 1px rgb(233,233,233);
+        }
+        .bottom{
+            line-height: 50px;
+            height: 50px;
+            border: solid 1px rgb(233,233,233);
+        }
+        .bottom-5{
+            width: 96px;
+            text-align: center;
+            background: rgb(230,67,70);
+            font-size: 20px;
+            color: white;
+            font-weight: bold;
+        }
+        .bottom-4{
+            padding: 5px 44px;
+            line-height: normal;
+        }
+        .bottom-4-top a{
+            color: rgb(230,67,70);
+            font-weight: bold;
+            padding: 0 2px;
+        }
+        .bottom-4-bottom a{
+            font-size: 14px;
+            color: rgb(230,67,70);
+            font-weight: bold;
+        }
+        .span1{
+            cursor: pointer;
+            display: inline-block;
+            width: 16px;
+            height: 20px;
+            background: white;
+            line-height: 20px;
+            text-align: center;
+            border:solid 1px rgb(233,233,233);
+        }
+        .span2{
+            display: inline-block;
+            width: 44px;
+            height: 20px;
+            background: white;
+            line-height: 20px;
+            text-align: center;
+            border-top:solid 1px rgb(233,233,233);
+            border-bottom:solid 1px rgb(233,233,233);
+        }
+        .span3{
+            cursor: pointer;
+            display: inline-block;
+            width: 16px;
+            height: 20px;
+            background: white;
+            line-height: 20px;
+            text-align: center;
+            border:solid 1px rgb(233,233,233);
+        }
+    </style>
+    <script src="gouwu.js"></script>
+</head>
+<body>
+    <div class='container'>
+        <div class='top'>
+            <input id='All-1' type='checkbox' style='margin-left: 15px; vertical-align: middle;'>
+            <span class='top-1' style='vertical-align: middle;'>全选</span>
+            <span class='top-2' style='vertical-align: middle; margin-left: 80px;' vertical-align: middle;>商品</span>
+            <span class='top-6' style='float: right; margin-right: 75px;'>操作</span>
+            <span class='top-5' style='float: right; margin-right: 45px;'>小计</span>
+            <span class='top-4' style='float: right; margin-right: 100px;'>数量</span>
+            <span class='top-3' style='float: right; margin-right: 70px;'>单价</span>
+        </div>
+        <div class='hr'></div>
+        <div class='body'>
+            <ul class='body-top'>
+                <li><input type='checkbox' style='margin-left: 15px;'></li>
+                <li><img src='images/11.jpg' style='margin-left: 15px;'></li>
+                <li style='margin-left: 14px; width:200px;'>荣耀9i 4GB+64GB 幻夜黑 移动联通电信4G全面屏手机 双卡双待</li>
+                <li style='margin-left: 250px; width:60px;'><a>¥</a><a>1330.90</a></li>
+                <li style='margin-left: 38px;'><span class='span1'>-</span><span class='span2'>1</span><span id='add' class='span3'>+</span></li>
+                <li style='margin-left: 35px;'><a>¥</a><a>1330.90</a></li>
+                <li style='margin-left: 35px; cursor: pointer'>删除</li>
+            </ul>
+            <ul class='body-bottom'>
+                <li><input type='checkbox' style='margin-left: 15px;'></li>
+                <li><img src='images/22.png' style='margin-left: 15px;'></li>
+                <li style='margin-left: 14px; width:200px;'>OPPO A1 全面屏拍照手机 3GB+32GB樱桃红 全网通 移动联通电信4G双卡双待</li>
+                <li style='margin-left: 250px; width:60px;'><a>¥</a><a>999.90</a></li>
+                <li style='margin-left: 38px;'><span class='span1'>-</span><span class='span2'>1</span><span id='add' class='span3'>+</span></li>
+                <li style='margin-left: 35px;'><a>¥</a><a>999.90</a></li>
+                <li style='margin-left: 35px; cursor: pointer '>删除</li>
+            </ul>
+        </div>
+        <div class='bottom'>
+            <input id='All-2' type='checkbox' style='margin-left: 15px; vertical-align: middle;'>
+            <span class='bottom-1' style='vertical-align: middle;'>全选</span>
+            <span id='close' class='bottom-2' style='vertical-align: middle; margin-left: 10px; cursor: pointer'>删除所选中的商品</span>
+            <div class='bottom-5' style='float: right;'>去结算</div>
+            <div class='bottom-4' style='float: right;'>
+                <span class='bottom-4-top' style='margin-right: 30px;'>已选择<a id='hownum'>0</a>件商品</span>
+                <span class='bottom-4-bottom'>总价:<a>¥</a><a id='Allnum'>0</a></span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

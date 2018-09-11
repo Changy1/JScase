@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>好7考试</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: url(imgs/bg.jpg);
+            height: 100%;
+            width: 100%;
+        }
+        .btn{
+            height: 21px;
+            width: 21px;
+            background: url(imgs/tool.png) no-repeat 0px 0px;
+            margin: 15px auto;
+            cursor: pointer;
+        }
+        .none{
+            display: none;
+            position: absolute;
+            top:0; bottom: 0; left: 0; right: 0;
+            margin: auto;
+            width: 350px;
+            height: 400px;
+            border: 2px black solid;
+            background: rgb(228,228,227);
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px  black;
+        }
+        .none-top{
+            margin: 5px;
+            padding: 5px 0;
+            font-weight: bold;
+            border-bottom: 2px solid rgb(161,161,160);
+            cursor: move;
+        }
+        .none-top-btn{
+            float: right;
+            height: 21px;
+            width: 21px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .none-top-1 {
+            background: url(imgs/tool.png) no-repeat -29px 0px;
+        }
+        .none-top-2{
+            background: url(imgs/tool.png) no-repeat -60px 0px;
+        }
+        .none-top-3{
+            background: url(imgs/tool.png) no-repeat -89px 0px;
+        }
+        .none-bottom{
+            margin: 5px;
+        }
+        .none-bottom p{
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+    </style>
+    <script src="main.js"></script>
+</head>
+<body>
+    <div id='bTn1' class='btn'></div>
+    <div id='bTn2' class='btn'></div>
+    <div id='click' class='none'>
+        <div id='down' class='none-top'>
+            <span>窗口标题</span>
+            <div id='cLose' class='none-top-btn none-top-3'></div>
+            <div id='bIg' class='none-top-btn none-top-2'></div>
+            <div id='sMall' class='none-top-btn none-top-1'></div>
+        </div>
+        <div class='none-bottom'>
+            <p>模板字面量 是允许嵌入表达式的字符串字面量大部分人对药物的不良反应并不陌生：包括腹痛、腹泻在内的肠胃反应不适</p>
+            <p>模板字面量 是允许嵌入表达式的字符串字面量模板字面量 是允许嵌入表达式的字符串字面量模板字面量 是允许嵌入表达式的字符串字面量。你可以使用多行字符串和字符串插值功能。它们在ES2015规范的先前版本中被称为“模板字符串”。</p>
+            <p>模板字面量 是允许嵌入表达式的字符串字面量模板字面量 是允许嵌入表达式的字符串字面量模板字面量 是允许嵌入表达式的字符串字面量。你可以使用多行字符串和字符串插值功能。它们在ES2015规范的先前版本中被称为“模板字符串”。</p>
+        </div>
+    </div>
+</body>
+</html>
