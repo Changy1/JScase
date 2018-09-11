@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+	</head>
+	<style type="text/css">
+		* {
+			padding: 0; margin: 0;
+		}
+		.main {
+			border: solid 1px black;
+			width: 600px; height: 512px;
+			background: url(img/bg_day.png) 0px 0;
+			margin: 20px auto;
+			position: relative;
+			
+			overflow: hidden;
+		}
+		.bird {
+			width: 37px; height: 27px;
+			background: url(img/bird0_0.png) no-repeat center;
+			position: absolute;
+			left: 50px; top: 200px;
+		}
+		.gameover {
+			width: 204px; height: 54px;
+			background: url(img/text_game_over.png);
+			margin: auto;
+			left: 0; top: 0; right: 0; bottom: 0;
+			position: absolute;
+			z-index: 999;
+			display: none;
+		}
+		.title {
+			width: 178px; height: 48px;
+			background: url(img/title.png);
+			margin: auto;
+			left: 0; top: 0; right: 0; bottom: 0;
+			position: absolute;
+		}
+		.bluebird {
+			display: block;
+			margin: 70px auto;
+		}
+		.start {
+			display: block;
+			position: absolute;
+			left: 240px; top:300px;
+			cursor: pointer;
+		}
+		.pipe {
+			position: absolute;
+			right: -52px;
+			width: 52px;
+			height: 320px;
+		}
+		.up{
+			background: url(img/pipe_down.png);
+		}
+		.down{
+			background: url(img/pipe_up.png);
+		}
+	</style>
+	<body>
+		<div class="main">
+			<div class="bird" style="display: none;"></div>
+			
+			<div class="gameover">
+				
+			</div>
+			
+			<div class="title">
+				
+			</div>
+			<img class="bluebird" src="img/bird1_0.png"/>
+			
+			<img class="start" src="img/button_play.png"/>
+		</div>
+		
+	</body>
+	<script src="../fengzhuang/comment.js"></script>
+	<script type="text/javascript">
+		var _flag = true;	//这个值用来碰撞后关闭所有管道的定时器
+		//管道
+		function Pipe(val){
+			this.el = document.createElement('div');
+			this.init = function(t){
+				switch(val){
+					case pipe_up:{
+						this.el.className = 'pipe up';
+						this.el.style.top = randomInt(-220,0) + 'px';
+						this._height = 320 + this.el.offsetTop;
+						this.flag = true;	//如果是上方管道则给对象一个flag是true
+					} break;
+					case pipe_down: {
+						this.el.className = 'pipe down';
+						this.el.style.bottom = randomInt(-220,-(320-(500- t._height -100))) + 'px';
+						this.flag = false;	//如果是下方管道则给对象一个flag是false
+					}
+				}
+				game.append(this);	//把管道这个对象传入game.append里面
+				this.remove();
+				return this;
+			}
+			this.remove = function(){
+				var x = 0;
+				var t = setInterval(function(){
+					//这里默认true那么就会执行运动
+					if(_flag){
+						this.el.style.right = -52 + x + 'px';
+						x++;
+						//如果他移出了屏幕那么关闭它并删除这个元素
+						if(this.el.offsetLeft+this.el.offsetWidth < 0 ){
+							this.stop();
+							this.el.remove();
+						}
+						//给他添加一个stop用来移除定时器
+						this.stop = function(){
+							clearInterval(t);
+						}
+						//只要运动就执行crash
+						this.crash();
+					//crash里面如果碰撞会执行game.over，然后_flag就变成了false，然后所有管道定时器执行时就会执行else，然后就会关闭自身
+					}else{
+						this.stop();
+					}
+				}.bind(this),20)
+			},
+			this.crash = function(){
+				//当这个对象的flag是true的时候说明是上管道，然后判断管道和小鸟的位置
+				if(this.flag){
+					if(	yellowBird.el.offsetTop  <= this.el.offsetTop + this.el.offsetHeight
+						&& yellowBird.el.offsetLeft >= this.el.offsetLeft - yellowBird.el.offsetWidth 
+						&& yellowBird.el.offsetLeft <= this.el.offsetLeft+this.el.offsetWidth){
+						game.over();
+					}
+				//这里是下管道的碰撞判断
+				}else{
+					if( yellowBird.el.offsetTop + yellowBird.el.offsetHeight >= this.el.offsetTop
+						&& yellowBird.el.offsetLeft >= this.el.offsetLeft - yellowBird.el.offsetWidth
+						&& yellowBird.el.offsetLeft <= this.el.offsetLeft+this.el.offsetWidth){
+						game.over();		
+					}
+				}
+			}
+		}
+		pipe_up = 1;
+		pipe_down = 2;
+		
+		function Eventcontrol(val){
+			switch (val) {
+				case 'key': return{
+					run : function(){
+						document.addEventListener('keydown',function(e){
+							if(e.keyCode == 32) yellowBird.jump();
+						})
+					}
+				};
+		//		case 'click':
+			}
+		}
+		
+		//蓝色小鸟
+		var blueBird = {
+			el : document.getElementsByClassName('bluebird')[0],
+			top : function(y){
+				if(y) this.el.style.marginTop = y + 'px';
+				return this.el.style.marginTop;
+			},
+			wing : function(){
+				var x = 0;
+				var t = setInterval(function(){
+					this.el.src = 'img/bird1_'+x+'.png';
+					x++;
+					if(x==3) x=0; 
+				}.bind(this),10)
+				this.stopWing = function(){
+					clearInterval(t);
+				}
+			},
+			fly : function(){
+				this.wing();
+				var x = 0;
+				var t = setInterval(function(){
+					this.top(70 - 50*Math.sin(Math.PI/180*x))
+					x+=2;
+				}.bind(this),20);
+				this.stop = function(){
+					clearInterval(t);
+				}
+			},
+			vanish : function(){
+				this.stopWing();
+				this.stop();
+				this.el.style.display = 'none';
+			}
+		}
+		
+		//黄色小鸟
+		var yellowBird = {
+			el : document.getElementsByClassName('bird')[0],
+			init : function (){
+				this.control.run();
+				this.wing();
+			},
+			wing: function(){
+				var x = 0;
+				var t = setInterval(function(){
+					this.el.style.background = 'url(img/bird0_'+x+'.png) no-repeat center';
+					x++;
+					if(x==3) x=0; 
+				}.bind(this),10)
+				this.stopWing = function(){
+					clearInterval(t);
+				}
+			},
+			show : function(){
+				this.init();
+				this.el.style.display = 'block';
+				this.fall();
+			},
+			speed : 5,
+			top: function(val){
+				if(val) this.el.style.top = val + 'px';
+				return this.el.offsetTop;
+			},
+			fall : function(){
+				var t = setInterval(function(){
+					this.top(this.top() + this.speed++ );
+					//这里是判断小鸟如果飞出游戏界面那么执行gameover
+					if(this.top()<=0 || this.top()>= game.el.offsetHeight ){
+						game.over();
+					}
+				}.bind(this),50)
+				this.stop = function(){
+					clearInterval(t);
+				}
+			},
+			jump : function(){
+				this.speed -= 10;
+			},
+			control : new Eventcontrol('key')
+		}
+		
+		//Game主页面
+		var game = {
+			stratBtn : document.getElementsByClassName('start')[0],
+			el : document.getElementsByClassName('main')[0],
+			title: document.getElementsByClassName('title')[0],
+			gameOver: document.getElementsByClassName('gameover')[0],
+			append: function(val){
+				this.el.appendChild(val.el)		//接收参数为这个对象，然后把这个对象里面的el添加进game的el
+			},
+			background : {//这里不好绑定this因为 background是个对象不是函数，他内部没有this
+				move : function(){
+					var x = 0;
+					var t = setInterval(function(){
+						game.el.style.backgroundPositionX = x-- + 'px';
+					},20)
+					game.stop = function(){
+						clearInterval(t);
+					}
+				}
+			},
+			init: function(){
+				blueBird.fly();
+				this.background.move();
+				this.stratBtn.addEventListener('click',function(){
+					blueBird.vanish();
+					this.stratBtn.style.display = 'none';
+					this.title.style.display = 'none';
+					this.strat();
+				}.bind(this))
+			},
+			pipe : function(){
+				var a = new Pipe(pipe_up).init();
+				new Pipe(pipe_down).init(a);
+				var t = setTimeout(function(){
+					this.pipe();
+				}.bind(this),randomInt(3000,7000));	//这里其实是一个timeout的递归类型，每次随机秒数后执行自身，无限循环，必须绑定this
+				this.stopPipe = function(){
+					clearTimeout(t);
+				}
+			},
+			strat: function(){
+				yellowBird.show();
+				this.pipe();
+			},
+			over : function(){
+				_flag = false;			//关闭管道移动定时器
+				this.stop();			//关闭背景移动定时器
+				this.stopPipe();		//关闭生产管道定时器
+				yellowBird.stop();		//关闭小鸟下落定时器
+				yellowBird.stopWing();	//关闭小鸟翅膀定时器
+				game.gameOver.style.display = 'block';	//让GAME OVER出现
+			},
+		}
+		game.init();
+	</script>
+</html>
