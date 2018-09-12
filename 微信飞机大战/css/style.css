@@ -1,0 +1,85 @@
+*{margin:0; padding:0;}
+html,body{width:100%; height:100%; overflow: hidden;}
+.main{
+	margin: auto;
+	height: 100%;
+	background: url(../images/bg.jpg) repeat-y;
+	background-position-y: 0px;
+	/*background-position: 0px 1px;*/
+	width: 480px;
+}
+.options{
+	position: absolute;
+	list-style: none;
+	margin: auto;
+	left: 0; right: 0; top: 200px;
+	width: 200px;
+	height: 300px;
+	
+}
+.options li{
+	border-radius: 5px;
+	box-shadow: 0 0 2px 1px black;
+	float: left;
+	width: 200px;
+	height: 55px;
+	text-align: center;
+	line-height: 55px;
+	margin-bottom: 20px;
+	background: #f40;
+	color: white;
+	font: "微软雅黑";
+	font-size: 28px;
+	cursor: pointer;
+}
+.logo{
+	position: absolute;
+	left: 0; right: 0; top: 50px;
+	margin: auto;
+	width: 428px; height: 104px;
+	background: url(../images/logo.png) no-repeat;
+}
+.loading{
+	position: absolute;
+	left: 0; right: 0; top: 50%;
+	margin: auto;
+	width: 192px; height: 41px;
+	background: url(../images/loading1.png) no-repeat;
+}
+.my-warplain{
+	position: absolute;
+	width: 98px; height: 122px;
+	background: url(../images/me.png) no-repeat;
+}
+.bullet{
+	position: absolute;
+	width: 7px; height: 18px;
+	background: url(../images/bullet.png) no-repeat;
+}
+.bullet_die{
+	position: absolute;
+	width: 41px; height: 39px;
+	background: url(../images/die1.png) no-repeat;
+}
+.enemy-small{
+	position: absolute;
+	width: 59px; height: 36px;
+	background: url(../images/plane1.png) no-repeat;
+}
+.enemy-middle{
+	position: absolute;
+	width: 70px; height: 92px;
+	background: url(../images/plane2.png) no-repeat;
+}
+.enemy-large{
+	position: absolute;
+	width:165px; height: 256px;
+	background: url(../images/plane3.png) no-repeat;
+}
+.weapon{
+	position: absolute;
+	width:59px; height: 103px;
+	left:0;
+	top:0;
+	background: url(../images/weapon.png) no-repeat;
+}

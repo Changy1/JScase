@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!-- 新 Bootstrap 核心 CSS 文件 -->
+		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css">
+		<!-- 可选的Bootstrap主题文件（一般不用引入） -->
+		<link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap-theme.min.css">
+		<style type="text/css">
+			body{
+				padding-top: 50px;
+			}
+			div[class^=col] {
+				padding: 10px
+			}
+			.item{
+				height: 120px;
+				border-radius : 4px;
+				background : #eee;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<script src='comment.js'></script>
+	<script>
+		window.onload = function(){
+			var Tr = document.getElementById('table_data').children[0].children[1];  		//准备克隆的对象
+			var Tbody = document.getElementsByTagName('tbody')[0];							//tbody
+			var	Table = document.getElementById('table_data');								//table
+			Table.onclick = function(e){													//这里添加删除 和改变商品数量的功能
+				var e = e || event;
+				if( e.target.nodeName == 'BUTTON' ){										//删除
+					Tbody.removeChild(e.target.parentNode.parentNode);
+					setCookie('name'+e.target.index,'a',-10000000);							//这个方法可以删除cookie,给他设置过期
+				}	
+				if( e.target.nodeName == 'SPAN' && e.target.className == 'input-group-addon input-sm span1'){
+					var num = e.target.nextElementSibling.value;
+					//这里首先要判断他input里面是不是空的因为如果是空的那么parseInt就没法用
+					//而这里如果他不是空的那么点击他的内容就会减1
+					if(num){
+						e.target.nextElementSibling.value = parseInt(num)-1; 
+					}
+					//当num是1的时候再减就直接变为空,这样可以防止出现负数的情况,也不会有0出现
+					if(num == 1){
+						e.target.nextElementSibling.value = '';
+					}
+				}	
+				if( e.target.nodeName == 'SPAN' && e.target.className == 'input-group-addon input-sm span2'){
+					var num = e.target.previousElementSibling.value;
+					//这里判断如果不是空的那么就parseInt然后加1
+					if(num){
+						e.target.previousElementSibling.value = parseInt(num)+1;
+					//而如果他是空的,那么就直接让他等于1,因为空字符串没有办法直接parseInt;
+					}else{
+						e.target.previousElementSibling.value = '1';
+					}
+				}
+			}
+			if(getCookie('name0')){
+				var newTr = Tr.cloneNode(true);													//克隆元素
+				newTr.children[0].children[0].innerText = getCookie('name0');					//这里提取cookie的名字
+				newTr.children[1].children[0].innerText = '$'+getCookie('price0');				//这里提取cookie的价格
+				newTr.children[2].children[0].children[1].value = '1';							//这里购买以后默认给一个数字1
+				newTr.children[3].children[0].index = 0;										//这里给删除添加一个标记使他和name的标记相同,方便之后删除cookie
+			.	Tbody.appendChild(newTr);
+			}
+			if(getCookie('name1')){																//这里因为网站自带商品二所以不需要克隆
+				Tr.children[2].children[0].children[1].value = '1';	
+				Tr.children[3].children[0].index = 1;
+			}else{
+				Tbody.removeChild(Tr);															//如果没买商品二就将他删除
+			}
+			if(getCookie('name2')){
+				var newTr = Tr.cloneNode(true);
+				newTr.children[0].children[0].innerText = getCookie('name2');
+				newTr.children[1].children[0].innerText = '$'+getCookie('price2');
+				newTr.children[2].children[0].children[1].value = '1';
+				newTr.children[3].children[0].index = 2;
+				Tbody.appendChild(newTr);
+			}
+			if(getCookie('name3')){
+				console.log(Tr);
+				var newTr = Tr.cloneNode(true);
+				newTr.children[0].children[0].innerText = getCookie('name3');
+				newTr.children[1].children[0].innerText = '$'+getCookie('price3');
+				newTr.children[2].children[0].children[1].value = '1';
+				newTr.children[3].children[0].index = 3;
+				Tbody.appendChild(newTr);
+			}
+		}
+	</script>
+	<body>
+		<div class="container">
+			<div class="col-lg-8">
+				<table id="table_data" class="table table-hover">
+					<tr>
+						<td class="active">商品名称</td>
+						<td class="success">商品价格</td>
+						<td class="warning">商品数量</td>
+						<td class="danger">operation</td>
+					</tr>
+					<tr>
+						<td class="text-center"><h5>商品2</h5></td>
+						<td class="text-center"><h5>$999</h5></td>
+						<td class="text-center" style="width:150px">
+						<div class="input-group">
+							<span class="input-group-addon input-sm span1">-</span>
+							<input type="text" class="form-control" placeholder="Amount">
+							<span class="input-group-addon input-sm span2">+</span>
+						</div>
+						</td>
+						<td class="text-center">
+						<button class="btn btn-danger btn-sm" href="#" role="delete">删除</button>
+						</td>
+					</tr>
+				</table>
+				<hr>
+				<div class="text-center">
+					<a class="btn btn-primary btn-lg">提交订单</a>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
+
