@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC>
+<html>
+<meta charset="utf-8" />
+<title>跟随鼠标移动（大图展示）</title>
+<style type="text/css">
+html,body{overflow:hidden;}
+body,div,ul,li{margin:0;padding:0;}
+#box ul{width:768px;height:172px;list-style-type:none;margin:10px auto;}
+#box li{float:left;width:170px;height:170px;cursor:pointer;display:inline;border:1px solid #ddd;margin:0 10px;}
+#box li.active{border:1px solid #a10000;}
+#box li img{width:170px;height:170px;vertical-align:top;}
+#big{position:absolute;width:400px;height:400px;border:2px solid #ddd;display:none;}
+#big div{position:absolute;top:0;left:0;width:400px;height:400px;opacity:0.5;filter:alpha(opacity=50);background:#fff url(img/loading.gif) 50% 50% no-repeat;}
+</style>
+<script type="text/javascript">
+window.onload = function(){
+	var uLi = document.getElementsByTagName('li');
+	var Div = document.getElementById('big');
+	var Img = document.createElement('img');  
+	//移入之前添加一个img把他赋值给 Img 移入事件里面只改动img的src
+	Div.appendChild(Img);
+	/*for(var i=0; i<uLi.length;i++){
+		uLi[i].index = i+1;						
+		//给每一个uLi都添加一个index 然后让他加1 和图片的序号对应起来
+		uLi[i].onmouseover = function(){
+			Img.src='shirt_'+this.index+'_big.jpg';		
+			Div.style.display='block';				
+			//其实这里会有个BUG 当DIV出现的时候距离鼠标非常近，鼠标很容易就会移入DIV，这时候就触发了out 然后DIV消失就又触发了 over 会一直闪
+			//鉴于这种情况我给DIV的css设置 pointer-event：none；或者给div的left和top加上10 让他离得鼠标远一点；
+			this.onmousemove= function(e){
+				var e = e || event;
+				//判断大图的右边会不会超出边界，如果超出就要改变他的宽度
+				if(e.clientX > window.innerWidth-Div.offsetWidth){
+					Div.style.left = (e.clientX-Div.offsetWidth) +'px';
+				}else{
+					Div.style.left = (e.clientX )+ 'px';
+				}
+				Div.style.top = (e.clientY )+ 'px';
+			}
+		}
+		//移出的时候再将DIV的display设置为none
+		uLi[i].onmouseout = function(){
+			Div.style.display = 'none';
+		}
+	}*/
+	var uL = document.getElementsByTagName('ul')[0];
+	//给li的父元素添加一个事件 使用事件代理机制
+	uL.onmouseover = function(e){
+		//在这里要判断是不是img触发的，如果不是的话 下面取src的话会报错，这要如果是img触发才执行函数
+		if( e.target.nodeName == 'IMG' ){
+			var e = e || event ;
+			//定义src等于 触发这个事件的元素的 src  此时实际上鼠标是放入了img 中
+			var str = e.target.src;
+			//分割这个字符串  取出的是 img图片的地址
+			str = str.substring(str.length-11,str.length-4);
+			Img.src=str+'_big.jpg';
+			Div.style.display='block';
+			//这里再给ul一个移动事件，当然前提都是当在img中的时候才会执行这个移动事件
+			uL.onmousemove = function(e){
+				var e = e || event;
+				if(e.clientX > window.innerWidth-Div.offsetWidth-10){
+					Div.style.left = (e.clientX-Div.offsetWidth-10) +'px';
+				}else{
+					Div.style.left = (e.clientX+10 )+ 'px';
+				}
+				Div.style.top = (e.clientY+10 )+ 'px';
+			}
+			//e.taget其实就是img ，这样移出img的时候就消失了，这里不能用ul 因为img之间的空隙也是ul
+			e.target.onmouseout = function(){
+				Div.style.display = 'none';
+			}
+		}
+	}
+}
+</script>
+</head>
+	<body>
+		<div id="box">
+		    <ul>
+		    	<li class=""><img src="shirt_1.jpg"></li>
+		        <li class=""><img src="shirt_2.jpg"></li>
+		        <li class=""><img src="shirt_3.jpg"></li>
+		        <li class=""><img src="shirt_4.jpg"></li>
+		    </ul>
+		</div>
+		<div id="big" style="display: none; top: 190px; left: 812px;">
+			
+		</div>
+	
+	</body>
+</html>
