@@ -1,0 +1,100 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>qq延时提示符</title>
+<style type="text/css">
+body,div{margin:0;padding:0;}
+.page{width:1360px;height:768px;background:url(image/bg.png) no-repeat;margin:0 auto; position:relative;}
+.right{width:306px;height:530px;background:url(image/qq.png) no-repeat;position:absolute;right:15px;top:20px;}
+#head{width:50px;height:50px;background:url(image/link.png) 0 -50px no-repeat;float:left;margin:265px 0 0 7px;}
+a#head:hover{ background-position: 0px 1px;}
+#left{width:279px;height:334px;background:url(image/prompt.png) no-repeat;position:absolute;top:250px;left:-282px;display:none;}
+</style>
+<script type="text/javascript">
+	onload = function(){
+		var a = document.getElementById('head');
+		var div = document.getElementById('left');
+
+		a.onmouseover=function(){										//当鼠标移入右边的时候左边显示
+			div.style.display='block';	
+		}
+		a.onmouseout=function(){										//当鼠标移出的时候会开启定时器，为了有时间移动到左边
+			var timeout=setTimeout(function(){						
+				div.style.display='none';
+			},500)
+			div.onmouseover=function(){
+				clearTimeout(timeout);									//当鼠标移入左边的时候关闭定时器，框不会消失
+			}
+			div.onmouseout=function(){										//当鼠标移出左边的时候 消失
+				div.style.display='none';
+			}
+		}
+	}
+/*		var _head = document.getElementById("head");
+		var _left = document.getElementById("left");
+		_head.onmouseover = function(){								//当鼠标移入右边的时候左边显示
+			_left.style.display = "block";
+		}
+		_head.onmouseout = function(){								//当鼠标移出右边的时候触发一个定时器  如果中间值是false那么他会消失，中间值默认是false，所以默认会消失
+			setTimeout(function(){
+				if(!isInside) {
+					_left.style.display = "none";
+				}
+			},500);
+		}
+		
+		var isInside = false;
+		
+		_left.onmouseover = function(){
+			isInside = true;										//当鼠标移入左边的时候会将中间值改为true那么 定时器内的函数不会执行 不会消失
+		}
+		_left.onmouseout = function(){
+			isInside = false;									//当鼠标移出左边的时候 框会消失 且定时器改为false 因为移入时改为了true 为了下一次直接移出右边的时候定时器可以执行
+			this.style.display = "none";
+		}*/
+
+
+</script>
+</head>
+<body>
+	<div class="page">
+		<div class="right">
+			<a href="###" id="head"></a>
+			<div id="left"></div>
+		</div>
+	</div>
+</body>
+	<script>
+		
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+</html>
