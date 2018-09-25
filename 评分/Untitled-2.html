@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>五星评分</title>
+<style type="text/css">
+#ul1{padding:0; margin:0; list-style:none;  width:300px; height:28px;}
+#ul1 li{float:left; background:url(star.gif) no-repeat 0 0; width:27px; height:28px; }
+
+.active{ }
+.default{cursor: pointer; }
+</style>
+<script type="text/javascript">
+	window.onload=function(){	
+		var arr=['差评','不推荐','一般','推荐','强力推荐'];
+		var uL1 = document.getElementById('ul1').children;					//此处是ul的子元素节点的伪数组
+		var div = document.getElementById('div');
+		var x = true;														//因为当点击以后就不能再用移入改变效果所以设置一个中间量
+		for(var i=0 ; i<uL1.length;i++ ){									//遍历此伪数组给每一个li都添加事件
+			uL1[i].index=i;
+			uL1[i].onmouseover=function(){									//添加移入事件
+				if(x){														//中间量初始值为true，当点击事件发生以后会变成false这时候移入事件就无法执行
+					for(var j=0;j<uL1.length;j++){							//先将所有的清空，再将此li之前的所有都改变背景
+						uL1[j].style.background="url(star.gif) no-repeat 0 0px";
+					}
+					for(var j=0;j<=this.index;j++){
+						uL1[j].style.background="url(star.gif) no-repeat 0 -28px";
+					}
+				}	
+			}
+			uL1[i].onclick=function(){										//点击事件，与移入相同，先清除所有，再将此li之前的所有改变背景
+				for(var j=0;j<uL1.length;j++){
+					uL1[j].style.background="url(star.gif) no-repeat 0 0px";
+				}
+				for(var j=0;j<=this.index;j++){
+					uL1[j].style.background="url(star.gif) no-repeat 0 -28px";
+				}
+				x=false;													//在这里改变一下x中间量的值，说明已经执行过点击事件，那么移入事件失效
+				div.innerHTML=arr[this.index];								//这里arr数组将输出与点击li下标相同的组内字符串
+			}
+		}
+	}
+</script>
+</head>
+
+<body>
+<ul id="ul1" >
+<li class="default"> </li>
+<li class="default"> </li>
+<li class="default"> </li>
+<li class="default"> </li>
+<li class="default"> </li>
+</ul>
+<div id="div"></div>
+</body>
+
+</html>
