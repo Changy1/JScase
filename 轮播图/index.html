@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+		<title> </title>	
+		
+    </head>
+    <style>
+		* {
+			padding: 0; margin: 0;
+		}
+		#box {
+			margin: auto;
+			width: 810px; height: 320px;
+			overflow: hidden;
+			position: relative;
+		}
+		.img {
+			list-style: none;
+			width: 4050px;
+			overflow: hidden;
+			position: absolute;
+			left: 0; top: 0;
+		}
+		.img li {
+			float: left;
+		}
+		.nav{
+			list-style: none;
+			position: absolute;
+			bottom: 20px;
+			right: 50px;
+		}
+		.nav li {
+			float: left;
+			margin-left: 10px;
+			width: 15px;
+			height: 15px;
+			border-radius: 50%;
+			background: rgba(0,0,0,0.7);
+		}
+		.nav .active{
+			background: white;
+		}
+		.leftbtn{
+			background: url('btn.gif');
+			height: 60px;
+			width: 60px;
+			position: absolute;
+			top: 120px;
+			left: 20px;
+		}
+		.rightbtn{
+			background: url('btn.gif') 0 -60px;
+			height: 60px;
+			width: 60px;
+			position: absolute;
+			right: 20px;
+			top: 120px;
+		}
+    </style>
+	<script src="../fengzhuang/common.js" type="text/javascript" charset="utf-8"></script>
+	<script src="../fengzhuang/animate.js" type="text/javascript" charset="utf-8"></script>
+    <script type="text/javascript">  
+		window.onload = function(){
+			var box = document.getElementById('box');
+			var oUl = document.getElementById('box').children[0];
+			var Nav = document.getElementsByClassName('nav')[0].children;
+			var leftBtn = document.getElementsByClassName('leftbtn')[0];
+			var rightBtn = document.getElementsByClassName('rightbtn')[0];
+			//此处定义一个值，让-810乘以他来控制ul左移
+			var index = 0; //全局变量，当定时器清除的时候它的值不受影响下次开启的时候继续递增
+			var flag=true;
+			function scrollleft(){
+				//每次定时器启动都会让index+1
+				if(flag){
+					flag = false;
+					index++;
+					for(var i=0; i<Nav.length; i++){
+						Nav[i].className = '';
+					}
+					Nav[index>=4?0:index].className = 'active';
+					//这里就会移动index*-810个距离，第二张图片显示的时候index是1
+					animate(oUl,{left: -810*index},function(){
+						//这里当第五张也就是假的第一张显示的时候index就是4
+						if(index >= 4){
+							//然后让他瞬间移动到第一张，这样在视觉上看不出来他动过，又可以从头开始移动
+							oUl.style.left = 0;
+							//让他的index也归零，下次开始的时候就又从一个-810开始移动
+							index = 0;
+						}
+						flag=true;
+					})
+				}
+			}
+			
+			function scrollright(){
+				index--;
+				for(var i=0; i<Nav.length; i++){
+					Nav[i].className = '';
+				}
+				Nav[index<0?3:index].className = 'active';
+				animate(oUl,{left: -810*index},function(){
+					if(index == 0){
+						oUl.style.left = -3240+'px';
+						index = 4;
+					}
+				})
+			}
+			
+			var timer = setInterval(scrollleft,3000)
+			
+			box.onmouseover = function(){
+				//当这里关闭定时器的时候index的值是全局变量 不受影响
+				clearInterval(timer);
+			}
+			box.onmouseout = function(){
+				//当这里再次开启定时器的时候，index还是取全局里的index所以还是继续滑动
+				timer = setInterval(scrollleft,3000)
+			}
+			for(var i=0 ; i<Nav.length; i++){
+				Nav[i].index = i;
+				Nav[i].onclick = function(){
+					index = this.index - 1;
+					scrollleft();
+				}
+			}
+			leftBtn.onclick = function(){
+				scrollright()
+			}
+			rightBtn.onclick = function(){
+				scrollleft();//这里直接点击index会在函数里面自动加一等于执行了一次计时器
+			}
+		}
+    </script>
+	<body>
+        <div id="box">
+			<ul class='img'>
+				<li>
+					<img src="001.jpg" >
+				</li>
+				<li>
+					<img src="002.jpg" >
+				</li>
+				<li>
+					<img src="003.jpg" >
+				</li>
+				<li>
+					<img src="004.jpg" >
+				</li>
+				<li>
+					<img src="001.jpg" >
+				</li>
+			</ul>
+			<ul class='nav'>
+				<li class='active'></li>
+				<li></li>
+				<li></li>
+				<li></li>
+			</ul>
+			<div class='leftbtn'></div>
+			<div class='rightbtn'></div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>简易计算器</title>
+<style type="text/css"  />
+
+* { padding: 0; margin: 0; }
+li { list-style: none; }
+body { background: #940032; }
+
+#counter { width: 500px; height: 420px; background:#939; margin: 50px auto 0; position: relative; }
+#counter h2 { line-height: 42px; padding-left: 15px; font-size: 14px; font-family: arial; color: #eee; }
+#counter a { font-weight: normal; text-decoration: none; color: #ff3333; }
+#counter a:hover { text-decoration: underline; }
+#bg { width: 280px; height: 200px; border: 3px solid #680023; background: #990033; filter: alpha(opacity=80); opacity: 0.8; position: absolute; left: 50%; top: 115px; margin-left: -141px; }
+#counter_content { width: 250px; position: absolute; top: 130px; left: 130px; z-index: 1; }
+#counter_content h3 { margin-bottom: 10px; }
+#counter_content h3 input { border: none; width: 243px; height: 30px; line-height: 30px; padding: 0 10px; background: url(images/ico.png) no-repeat; text-align: right; color: #333; font-size: 14px; font-weight: bold; }
+#counter_content div { width: 250px; }
+#counter_content input { width: 60px; height: 30px; line-height: 30px; float: left; background: url(images/ico.png) no-repeat -303px 0; text-align: center; color: #fff; cursor: pointer; margin: 0 1px 4px 0; border:0; }
+#counter_content div > input:hover { background: url(images/ico.png) no-repeat -243px 0; }
+#counter p { width: 500px; position: absolute; bottom: 20px; left: 0; color: #ff3333; text-align: center; font-size: 12px; }
+</style>
+</head>
+</head>
+
+<body>
+
+<div id="counter">
+	<h2>简易计算</h2>
+	<div id="counter_content">
+		<h3><input id="input1" type="text" value="0" /></h3>
+		<div id="div1">
+			<input type="button" value="7" />
+            <input type="button" value="8" />
+            <input type="button" value="9" />
+            <input type="button" value="+" />
+            <input type="button" value="4" />
+            <input type="button" value="5" />
+            <input type="button" value="6" />
+            <input type="button" value="-" />
+            <input type="button" value="1" />
+            <input type="button" value="2" />
+            <input type="button" value="3" />
+            <input type="button" value="*" />
+            <input type="button" value="0" />
+            <input type="button" value="C" />
+            <input type="button" value="=" />
+            <input type="button" value="/" />
+		</div>
+	</div>
+	
+	
+</div>
+</body>
+<script type="text/javascript">
+	var div1=document.getElementById('div1');
+	var but=div1.getElementsByTagName('input');
+	var input1=document.getElementById('input1');
+	var last='';
+	onload=function(){
+		for(var i=0;i<but.length;i++){
+			but[i].onclick=function(){
+				var asc = this.value.charCodeAt(0)
+				if(asc>=48&&asc<=57){
+					if(input1.value==0){
+						input1.value = ''
+						input1.value = input1.value+this.value;
+					}else if(last[last.length-1]=='+'||last[last.length-1]=='-'||last[last.length-1]=='*'||last[last.length-1]=='/'){
+						input1.value = this.value;
+					}else{
+						input1.value = input1.value+this.value;
+					}
+					last=last+this.value;
+				}else if(this.value=="+"||this.value=="-"||this.value=="*"||this.value=="/"){
+					if(!(last[last.length-1]=='+'||last[last.length-1]=='-'||last[last.length-1]=='*'||last[last.length-1]=='/')){
+						last=last+this.value;
+					}else{
+						last=last.replace(last[last.length-1],this.value);
+					}
+				}else if(this.value=='='){
+					var a = eval(last);
+					input1.value = a;
+					last = a;
+				}else{
+					input1.value = '0';
+					last = '';
+				}
+			}
+		}	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
