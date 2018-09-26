@@ -1,0 +1,15 @@
++
+它只能作用于字符串数值，否则就会返回NaN(不是数字)
+
+function toNumber(strNumber){
+	return +strNumber
+}
+console.log(toNumber("1234")); 
+// 1234
+console.log(toNumber("abc"));
+ // NaN
+
+并且此方法也可以作用于 Date 函数 这使它将返回时间戳：
+console.log(+new Date()) 
+// 1461288164385
+

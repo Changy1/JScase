@@ -1,0 +1,13 @@
+!!操作符 
+!!可以将变量转换为布尔值
+!!可以将任何类型的值转换为布尔值，并且只有当这个变量的值为0/null/""/NaN/undefined 的时候才会返回false，其他情况都返回true
+!! 123
+//true
+!! []
+//true
+!! null
+//false
+!! ""
+//false
+!!undefined
+//false
